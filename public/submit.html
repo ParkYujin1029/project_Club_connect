@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>HTML Preview</title>
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="submit.css" />
 </head>
 
 <body>
@@ -34,6 +34,7 @@
     </script>
     <header class="cd-header">
         <div class="header-wrapper">
+
             <div class="logo-wrap">
                 <a href="#" class="hover-target"><span>C</span>C</a>
             </div>
@@ -46,15 +47,15 @@
             </div>
         </div>
     </header>
-    
+
     <div class="nav">
         <div class="nav__content">
             <ul class="nav__list">
                 <li class="nav__list-item active-nav"><a href="#" class="hover-target">Home</a></li>
-                <li class="nav__list-item"><a href="search.html" class="hover-target" id="seasend">Search</a></li>
-                <li class="nav__list-item"><a href="myclub.html" class="hover-target" id="mycsend">My Club</a></li>
-                <li class="nav__list-item"><a href="board.html" class="hover-target" id="boasend">Board</a></li>
-                <li class="nav__list-item"><a href="mypage.html" class="hover-target" id="mypsend">My page</a></li>
+                <li class="nav__list-item"><a href="#" class="hover-target">Search</a></li>
+                <li class="nav__list-item"><a href="#" class="hover-target">My Club</a></li>
+                <li class="nav__list-item"><a href="#" class="hover-target">Board</a></li>
+                <li class="nav__list-item"><a href="#" class="hover-target">My Page</a></li>
             </ul>
         </div>
     </div>
@@ -63,35 +64,57 @@
         <div class="switch-wrap">
             <h1>HOME</h1>
         </div>
-        <h2>top 10 동아리</h2>
     </div>
 
     <div class='cursor' id="cursor"></div>
     <div class='cursor2' id="cursor2"></div>
     <div class='cursor3' id="cursor3"></div>
 
-    <div class="content">
-        <div class="container mt-3">
-
+    <div class="section">
+        <div class="container">
+            <!-- 밑에 전체를 버튼으로만들면 될듯 -->
+            <div class="card-3d-wrap">
+                <div class="card-front">
+                    <input id="clubName" type="text" class="form-style" placeholder="동아리 이름" />
+                    <input id="cluber" type="text" class="form-style-sub" placeholder="동아리 장" />
+                    <input id="keyword" type="text" class="form-style-sub" placeholder="태그" />
+                    <input id="yon" type="text" class="form-style-sub" placeholder="모집여부(모집중/모집완료)" />
+                </div>
+                <div style=" text-align: center;">
+                    <button class="btn btn-danger mt-3" id="subsend">Submit</button>
+                </div>
+                
+            </div>
         </div>
     </div>
-    
+
+
     </div>
     <script>
         const db = firebase.firestore();
-        db.collection('Club').get().then((결과)=>{
-            결과.forEach((doc)=>{
-                var 템플릿 = `<div class="product">
-                <div class="flex-grow-1 p-4">
-                    <h5 class="title">${doc.data().동아리}</h5>
-                    <p class="user">${doc.data().동장}</p>
-                    <p class="onstate">${doc.data().모집}</p>
-                    <p class="tag">${doc.data().태크}</p>
-                </div>
-            </div>`;
-                $('.container').append(템플릿)
-            })
+
+        $('#subsend').click(function(){
+            
+            var 저장 = {
+                동아리 : $('#clubName').val(),
+                동장 : $('#cluber').val(),
+                태그 : $('#keyword').val(),
+                모집 : $('#yon').val()
+            }
+            db.collection('Club').add(저장)
+        .then(function() {
+            console.log("데이터 저장이 완료되었습니다.");
+
+            // 홈 화면으로 이동
+            window.location.href = "home.html";
         })
+        .catch(function(error) {
+            console.error("데이터 저장 중 오류가 발생했습니다.", error);
+        });
+
+        
+        });
+
     </script>
     <script>
         (function ($) {
