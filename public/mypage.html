@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>HTML Preview</title>
-    <link rel="stylesheet" href="home.css" />
+    <link rel="stylesheet" href="mypage.css" />
 </head>
 
 <body>
@@ -32,7 +32,136 @@
         };
         firebase.initializeApp(firebaseConfig);
     </script>
-    자살하고싶지않아..하하
+    <header class="cd-header">
+        <div class="header-wrapper">
+        <div class="logo-wrap">
+        <a href="#" class="hover-target"><span>C</span>C</a>
+        </div>
+        <div class="nav-but-wrap">
+        <div class="menu-icon hover-target">
+        <span class="menu-icon__line menu-icon__line-left"></span>
+        <span class="menu-icon__line"></span>
+        <span class="menu-icon__line menu-icon__line-right"></span>
+        </div>					
+        </div>					
+        </div>				
+        </header>
+        <div class="nav">
+            <div class="nav__content">
+                <ul class="nav__list">
+            <li class="nav__list-item"><a href="home.html" class="hover-target">Home</a></li>
+                    <li class="nav__list-item"><a href="search.html" class="hover-target">Search</a></li>
+                    <li class="nav__list-item"><a href="myclub.html" class="hover-target">My Club</a></li>
+                    <li class="nav__list-item"><a href="board.html" class="hover-target">Board</a></li>
+                    <li class="nav__list-item active-nav"><a href="#" class="hover-target">Management</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="section full-height over-hide">
+            <div class="switch-wrap">
+        
+          <section id="content">
+        <h2>Member List</h2>
+        <table id="memberTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 여기에 회원 정보가 동적으로 추가될 예정 -->
+          </tbody>
+        </table>
+    </section>
+
+    <section id="addMemberForm">
+    <h2>Add Member</h2>
+    <form id="memberForm" onsubmit="addMember(event)">
+    <input type="text" id="memberId" placeholder="ID" required>
+    <input type="text" id="memberName" placeholder="Name" required>
+    <input type="email" id="memberEmail" placeholder="Email" required>
+    <button type="submit">Add</button>
+    </form>
+    </section>
+    </div>
+    <script>
+       (function($) { "use strict";
+		
+        //Navigation
+        var app = function () {
+            var body = undefined;
+            var menu = undefined;
+            var menuItems = undefined;
+            var init = function init() {
+                body = document.querySelector('body');
+                menu = document.querySelector('.menu-icon');
+                menuItems = document.querySelectorAll('.nav__list-item');
+                applyListeners();
+            };
+            var applyListeners = function applyListeners() {
+                menu.addEventListener('click', function () {
+                    return toggleClass(body, 'nav-active');
+                });
+            };
+            var toggleClass = function toggleClass(element, stringClass) {
+                if (element.classList.contains(stringClass)) element.classList.remove(stringClass);else element.classList.add(stringClass);
+            };
+            init();
+        }();            
+    })(jQuery);
+    
+    // 회원 정보를 저장할 배열
+    var members = [];
+    
+    // 회원 추가 함수
+    function addMember(event) {
+      event.preventDefault();
+    
+      // 입력값 가져오기
+      var id = document.getElementById("memberId").value;
+      var name = document.getElementById("memberName").value;
+      var email = document.getElementById("memberEmail").value;
+    
+      // 회원 객체 생성
+      var member = {
+        id: id,
+        name: name,
+        email: email
+      };
+    
+      // 회원 배열에 추가
+      members.push(member);
+    
+      // 회원 테이블에 추가
+      var table = document.getElementById("memberTable");
+      var row = table.insertRow(-1);
+      var idCell = row.insertCell(0);
+      var nameCell = row.insertCell(1);
+      var emailCell = row.insertCell(2);
+      var actionCell = row.insertCell(3);
+    
+      idCell.innerHTML = id;
+      nameCell.innerHTML = name;
+      emailCell.innerHTML = email;
+      actionCell.innerHTML = '<button onclick="deleteMember(this)">Delete</button>';
+    
+      // 입력 필드 초기화
+      document.getElementById("memberId").value = "";
+      document.getElementById("memberName").value = "";
+      document.getElementById("memberEmail").value = "";
+    }
+    
+    // 회원 삭제 함수
+    function deleteMember(button) {
+      var row = button.parentNode.parentNode;
+      var index = row.rowIndex - 1;
+      members.splice(index, 1);
+      row.parentNode.removeChild(row);
+    }
+    </script>
 </body>
 
 </html>

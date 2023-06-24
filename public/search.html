@@ -51,11 +51,11 @@
      <div class="nav">
         <div class="nav__content">
            <ul class="nav__list">
-              <li class="nav__list-item"><a href="#" class="hover-target">Home</a></li>
+              <li class="nav__list-item"><a href="home.html" class="hover-target">Home</a></li>
               <li class="nav__list-item active-nav"><a href="#" class="hover-target">Search</a></li>
-              <li class="nav__list-item"><a href="#" class="hover-target">My Club</a></li>
-              <li class="nav__list-item"><a href="#" class="hover-target">Board</a></li>
-              <li class="nav__list-item"><a href="#" class="hover-target">My page</a></li>
+              <li class="nav__list-item"><a href="myclub.html" class="hover-target">My Club</a></li>
+              <li class="nav__list-item"><a href="board.html" class="hover-target">Board</a></li>
+              <li class="nav__list-item"><a href="mypage.html" class="hover-target">My page</a></li>
            </ul>
         </div>
      </div>      
@@ -88,28 +88,32 @@
   
       </div>
       <script>
-                     var app = function () {
-        var body = undefined;
-        var menu = undefined;
-        var menuItems = undefined;
-        var init = function init() {
-           body = document.querySelector('body');
-           menu = document.querySelector('.menu-icon');
-           menuItems = document.querySelectorAll('.nav__list-item');
-           applyListeners();
-        };
-        var applyListeners = function applyListeners() {
-           menu.addEventListener('click', function () {
-              return toggleClass(body, 'nav-active');
-           });
-        };
-        var toggleClass = function toggleClass(element, stringClass) {
-           if (element.classList.contains(stringClass)) element.classList.remove(stringClass);else element.classList.add(stringClass);
-        };
-        init();
-     }();
-  
-              </script>
+        (function ($) {
+            "use strict";
+
+            //Navigation
+            var app = function () {
+                var body = undefined;
+                var menu = undefined;
+                var menuItems = undefined;
+                var init = function init() {
+                    body = document.querySelector('body');
+                    menu = document.querySelector('.menu-icon');
+                    menuItems = document.querySelectorAll('.nav__list-item');
+                    applyListeners();
+                };
+                var applyListeners = function applyListeners() {
+                    menu.addEventListener('click', function () {
+                        return toggleClass(body, 'nav-active');
+                    });
+                };
+                var toggleClass = function toggleClass(element, stringClass) {
+                    if (element.classList.contains(stringClass)) element.classList.remove(stringClass); else element.classList.add(stringClass);
+                };
+                init();
+            }();
+        })(jQuery); 
+    </script>
 </body>
 
 </html>
