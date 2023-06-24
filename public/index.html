@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>HTML Preview</title>
+    <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.5/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyC9Vri6Ef5X8VSlBUZnV8weHz9kDKNwU28",
+            authDomain: "real-club-connect.firebaseapp.com",
+            projectId: "real-club-connect",
+            storageBucket: "real-club-connect.appspot.com",
+            messagingSenderId: "952734830105",
+            appId: "1:952734830105:web:3504053b4388fe1a706488"
+        };
+        firebase.initializeApp(firebaseConfig);
+    </script>
+
+<a href="https://front.codes/" class="logo" target="_blank">
+</a>
+<div class="section">
+    <div class="container">
+        <div class="row full-height justify-content-center">
+            <div class="col-12 text-center align-self-center py-5">
+                <div class="section pb-5 pt-5 pt-sm-2 text-center">
+                    <h6 class="mb-0 pb-3"><span>로그인 </span><span>회원가입</span></h6>
+                    <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+                    <label for="reg-log"></label>
+                    <div class="card-3d-wrap mx-auto">
+                        <div class="card-3d-wrapper">
+                            <div class="card-front">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">로그인</h4>
+                                        <div class="form-group">
+                                            <input type="email" name="logemail" class="form-style" placeholder="이메일"
+                                                id="logemail" autocomplete="off">
+                                            <i class="input-icon uil uil-at"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" name="logpass" class="form-style"
+                                                placeholder="비밀번호" id="logpass" autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <button class="btn btn-danger mt-3" id="sendlog">확인</button>
+                                        <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 까먹으셨나요?</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-back">
+                                <div class="center-wrap">
+                                    <div class="section text-center">
+                                        <h4 class="mb-4 pb-3">회원가입</h4>
+                                        <div class="form-group">
+                                            <input type="text" name="regname" class="form-style"
+                                                placeholder="이름을 입력해주세요" id="regname" autocomplete="off">
+                                            <i class="input-icon uil uil-user"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="email" name="regemail" class="form-style"
+                                                placeholder="이메일을 입력해주세요 (학교 이메일)" id="regemail" autocomplete="off">
+                                            <i class="input-icon uil uil-at"></i>
+                                        </div>
+                                        <div class="form-group mt-2">
+                                            <input type="password" name="regpass" class="form-style"
+                                                placeholder="비밀번호를 입력해주세요" id="regpass" autocomplete="off">
+                                            <i class="input-icon uil uil-lock-alt"></i>
+                                        </div>
+                                        <button class="btn btn-danger mt-3" id="sendreg">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        const db = firebase.firestore();
+
+        $('#sendreg').click(function(){
+            firebase.auth().createUserWithEmailAndPassword($('#regemail').val(),$('#regpass').val()).then(result=>{
+                result.user.updateProfile({
+                    displayName : $('#regname')
+                });
+            }).catch(err=>{
+                console.error(err);
+            })
+        })
+        $('#sendlog').click(function(){
+            firebase.auth().signInWithEmailAndPassword($('#logemail').val(),$('#logpass').val()).then(result=>{
+                console.log("로그인 성공");
+                console.log(result.user);
+                window.location.href = "home.html";
+            });
+        });
+    </script>
+
+</body>
+
+</html>
